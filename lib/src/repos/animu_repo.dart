@@ -145,4 +145,21 @@ class AnimuRepository {
     ]);
     return data;
   }
+
+  /// Returns data for toxicity filters page
+  Future<List<dynamic>> getToxicityFiltersSettings() async {
+    List<dynamic> data = await Future.wait(
+        [animuApiClient.fetchSettings(), animuApiClient.fetchChannels()]);
+    return data;
+  }
+
+  /// Update settings for toxicity filters
+  Future<List<dynamic>> updateToxicityFiltersSettings(
+      {@required String key, @required dynamic value}) async {
+    List<dynamic> data = await Future.wait([
+      animuApiClient.updateSettings(key: key, value: value),
+      animuApiClient.fetchChannels()
+    ]);
+    return data;
+  }
 }

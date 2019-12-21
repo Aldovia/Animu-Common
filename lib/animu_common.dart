@@ -10,6 +10,7 @@ export 'src/blocs/login_bloc.dart';
 export 'src/blocs/logs_bloc.dart';
 export 'src/blocs/rep_leaderboards_bloc.dart';
 export 'src/blocs/rep_settings_bloc.dart';
+export 'src/blocs/toxicity_filters_bloc.dart';
 
 // Events
 export 'src/events/auth_event.dart';
@@ -23,6 +24,7 @@ export 'src/events/login_event.dart';
 export 'src/events/logs_event.dart';
 export 'src/events/rep_leaderboards_event.dart';
 export 'src/events/rep_settings_event.dart';
+export 'src/events/toxicity_filters_settings_event.dart';
 
 // States
 export 'src/states/auth_state.dart';
@@ -36,6 +38,7 @@ export 'src/states/login_state.dart';
 export 'src/states/logs_state.dart';
 export 'src/states/rep_leaderboards_state.dart';
 export 'src/states/rep_settings_state.dart';
+export 'src/states/toxicity_filters_settings_state.dart';
 
 // Models
 export 'src/models/growth_rate.dart';
