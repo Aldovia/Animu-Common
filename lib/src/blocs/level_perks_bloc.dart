@@ -24,6 +24,7 @@ class LevelPerksBloc extends Bloc<LevelPerksEvent, LevelPerksState> {
 
       try {
         final List<dynamic> data = await animuRepository.getLevelPerks();
+        print(data);
 
         final List<LevelPerk> levelPerks = data[0];
         final List<Role> roles = data[1];

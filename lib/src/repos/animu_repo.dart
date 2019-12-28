@@ -162,4 +162,40 @@ class AnimuRepository {
     ]);
     return data;
   }
+
+  /// Returns Self roles for authorized guild
+  Future<List<dynamic>> getSelfRoles() async {
+    List<dynamic> data = await Future.wait([
+      animuApiClient.fetchSelfRoles(),
+      animuApiClient.fetchRoles(),
+    ]);
+    return data;
+  }
+
+  /// Returns data for self roles settings page
+  Future<List<dynamic>> getSelfRolesSettings() async {
+    List<dynamic> data = await Future.wait(
+        [animuApiClient.fetchSettings(), animuApiClient.fetchChannels()]);
+    return data;
+  }
+
+  /// Creates new self role and returns all self roles
+  Future<List<dynamic>> createSelfRole(
+      {@required role, @required emoji}) async {
+    List<dynamic> data = await Future.wait([
+      animuApiClient.createSelfRole(role: role, emoji: emoji),
+      animuApiClient.fetchRoles(),
+    ]);
+    return data;
+  }
+
+  /// Update settings for self roles
+  Future<List<dynamic>> updateSelfRolesSettings(
+      {@required String key, @required dynamic value}) async {
+    List<dynamic> data = await Future.wait([
+      animuApiClient.updateSettings(key: key, value: value),
+      animuApiClient.fetchChannels()
+    ]);
+    return data;
+  }
 }

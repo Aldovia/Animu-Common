@@ -11,8 +11,10 @@ class Settings extends Equatable {
   final bool allowExpBottles;
   final bool deleteToxicMessages;
   final List<TextChannel> ignoreExpChannels;
+  final TextChannel selfRolesChannel;
   final List<Role> ignoreLevelRoles;
   final List<Role> ignoreRepRoles;
+  final String selfRolesMessage;
 
   // Toxicity Filters
   final bool filterToxicity;
@@ -36,8 +38,10 @@ class Settings extends Equatable {
     this.allowExpBottles,
     this.deleteToxicMessages,
     this.ignoreExpChannels,
+    this.selfRolesChannel,
     this.ignoreLevelRoles,
     this.ignoreRepRoles,
+    this.selfRolesMessage,
     this.filterToxicity,
     this.filterSevereToxicity,
     this.filterProfanity,
@@ -59,8 +63,10 @@ class Settings extends Equatable {
         allowExpBottles,
         deleteToxicMessages,
         ignoreExpChannels,
+        selfRolesChannel,
         ignoreLevelRoles,
         ignoreRepRoles,
+        selfRolesMessage,
         filterToxicity,
         filterSevereToxicity,
         filterProfanity,
@@ -78,6 +84,7 @@ class Settings extends Equatable {
     final List<Role> tempIgnoreLevelRoles = [];
     final List<Role> tempIgnoreRepRoles = [];
     TextChannel tempReportsChannel;
+    TextChannel tempSelfRolesChannel;
 
     for (int i = 0; i < channelsJson.length; i++) {
       if (json['ignoreExpChannels'].contains(channelsJson[i]['id']))
@@ -87,6 +94,9 @@ class Settings extends Equatable {
 
       if (json['logChannels']['reports'] == channelsJson[i]['id'])
         tempReportsChannel = TextChannel.fromJson(channelsJson[i]);
+
+      if (json['selfRolesChannel'] == channelsJson[i]['id'])
+        tempSelfRolesChannel = TextChannel.fromJson(channelsJson[i]);
     }
 
     for (int i = 0; i < rolesJson.length; i++) {
@@ -110,8 +120,10 @@ class Settings extends Equatable {
       allowExpBottles: json['allowExpBottles'],
       deleteToxicMessages: json['deleteToxicMessages'],
       ignoreExpChannels: tempIgnoreExpChannels,
+      selfRolesChannel: tempSelfRolesChannel,
       ignoreLevelRoles: tempIgnoreLevelRoles,
       ignoreRepRoles: tempIgnoreRepRoles,
+      selfRolesMessage: json['selfRolesMessage'],
       logReports: tempReportsChannel,
       filterToxicity: json['toxicityFilters']['toxicity'] ?? false,
       filterSevereToxicity: json['toxicityFilters']['severeToxicity'] ?? false,

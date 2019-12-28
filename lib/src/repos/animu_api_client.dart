@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:animu_common/src/models/self_role.dart';
+
 import '../models/growth_rate.dart';
 import '../models/guild.dart';
 import '../models/joined_rate.dart';
@@ -15,9 +17,8 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 class AnimuApiClient {
-  static const baseUrl = 
-  // 'http://140.82.39.61:8080'; // Public
-  'http://192.168.1.105:8080'; // Dev testing
+  static const baseUrl = 'http://140.82.39.61:8080'; // Public
+  // 'http://192.168.1.105:8080'; // Dev testing
 
   final http.Client httpClient;
   final String token;
@@ -233,6 +234,72 @@ class AnimuApiClient {
     return channelsList;
   }
 
+  /// Returns self roles of a guild
+  Future<List<SelfRole>> fetchSelfRoles() async {
+    final String selfRolesUrl = '$baseUrl/api/selfroles?token=$token';
+    final String rolesUrl = '$baseUrl/api/roles?token=$token';
+
+    final List<http.Response> responses =
+        await Future.wait([http.get(selfRolesUrl), http.get(rolesUrl)]);
+
+    if (responses[0].statusCode != 200 || responses[1].statusCode != 200) {
+      throw Exception('error getting perks');
+    }
+
+    final selfRolesJson = jsonDecode(responses[0].body);
+    final rolesJson = jsonDecode(responses[1].body);
+
+    final List<SelfRole> selfRolesList = [];
+
+    for (int i = 0; i < selfRolesJson['selfRoles'].length; i++) {
+      print(selfRolesJson['selfRoles'][i].toString());
+      selfRolesList.add(
+        SelfRole.fromJson(selfRolesJson['selfRoles'][i], rolesJson['roles']),
+      );
+    }
+
+    return selfRolesList;
+  }
+
+  /// Create a new self role
+  Future<List<SelfRole>> createSelfRole(
+      {@required role, @required emoji}) async {
+    final String selfRolesUrl = '$baseUrl/api/selfroles?token=$token';
+    final String rolesUrl = '$baseUrl/api/roles?token=$token';
+
+    final Map<String, dynamic> data = {
+      'roleName': role,
+      'emojiName': emoji,
+    };
+
+    final body = jsonEncode(data);
+
+    final List<http.Response> responses = await Future.wait([
+      http.post(selfRolesUrl,
+          headers: {"Content-Type": "application/json"}, body: body),
+      http.get(rolesUrl)
+    ]);
+
+    if (responses[0].statusCode != 200 || responses[1].statusCode != 200) {
+      throw Exception('error getting perks');
+    }
+
+    final selfRolesJson = jsonDecode(responses[0].body);
+    final rolesJson = jsonDecode(responses[1].body);
+
+    print(selfRolesJson.toString());
+
+    final List<SelfRole> selfRolesList = [];
+
+    for (int i = 0; i < selfRolesJson['selfRoles'].length; i++) {
+      selfRolesList.add(
+        SelfRole.fromJson(selfRolesJson['selfRoles'][i], rolesJson['roles']),
+      );
+    }
+
+    return selfRolesList;
+  }
+
   /// Returns level perks of a guild
   Future<List<LevelPerk>> fetchLevelPerks() async {
     final String levelPerksUrl = '$baseUrl/api/levelperks?token=$token';
@@ -261,6 +328,7 @@ class AnimuApiClient {
     return levelPerksList;
   }
 
+  /// Create a new perk
   Future<List<LevelPerk>> createLevelPerk(
       {@required level, @required perkName, @required perkValue}) async {
     final String levelPerksUrl = '$baseUrl/api/levelperks?token=$token';
