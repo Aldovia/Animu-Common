@@ -146,6 +146,15 @@ class AnimuRepository {
     return data;
   }
 
+  /// Delete a level perk and returns all level perks
+  Future<List<dynamic>> deleteLevelPerk({@required level}) async {
+    List<dynamic> data = await Future.wait([
+      animuApiClient.deleteLevelPerk(level: level),
+      animuApiClient.fetchRoles(),
+    ]);
+    return data;
+  }
+
   /// Returns data for toxicity filters page
   Future<List<dynamic>> getToxicityFiltersSettings() async {
     List<dynamic> data = await Future.wait(

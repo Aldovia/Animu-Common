@@ -17,8 +17,9 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 class AnimuApiClient {
-  static const baseUrl = 'http://140.82.39.61:8080'; // Public
-  // 'http://192.168.1.105:8080'; // Dev testing
+  static const baseUrl =
+  //'http://140.82.39.61:8080'; // Public
+  'http://192.168.1.105:8080'; // Dev testing
 
   final http.Client httpClient;
   final String token;
@@ -350,6 +351,34 @@ class AnimuApiClient {
 
     if (responses[0].statusCode != 200 || responses[1].statusCode != 200) {
       throw Exception('error getting perks');
+    }
+
+    final levelPerksJson = jsonDecode(responses[0].body);
+    final rolesJson = jsonDecode(responses[1].body);
+
+    final List<LevelPerk> levelPerksList = [];
+
+    for (int i = 0; i < levelPerksJson['levelPerks'].length; i++) {
+      levelPerksList.add(
+        LevelPerk.fromJson(levelPerksJson['levelPerks'][i], rolesJson['roles']),
+      );
+    }
+
+    levelPerksList.sort((a, b) => a.level.compareTo(b.level));
+
+    return levelPerksList;
+  }
+
+  /// Delete a level perk
+  Future<List<LevelPerk>> deleteLevelPerk({@required level}) async {
+    final String levelPerksUrl = '$baseUrl/api/levelperks/$level?token=$token';
+    final String rolesUrl = '$baseUrl/api/roles?token=$token';
+
+    final List<http.Response> responses =
+        await Future.wait([http.delete(levelPerksUrl), http.get(rolesUrl)]);
+
+    if (responses[0].statusCode != 200 || responses[1].statusCode != 200) {
+      throw Exception('error deleting perks');
     }
 
     final levelPerksJson = jsonDecode(responses[0].body);

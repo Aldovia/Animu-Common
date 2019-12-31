@@ -27,3 +27,17 @@ class CreateLevelPerk extends LevelPerksEvent {
   String toString() =>
       'CreateLevelPerk {level: $level, perkName: $perkName, perkValue: $perkValue}';
 }
+
+class DeleteLevelPerk extends LevelPerksEvent {
+  final int level;
+
+  DeleteLevelPerk({
+    @required this.level,
+  });
+
+  @override
+  List<Object> get props => [level];
+
+  @override
+  String toString() => 'DeleteLevelPerk {level: $level}';
+}

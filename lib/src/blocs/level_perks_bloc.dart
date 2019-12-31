@@ -48,5 +48,19 @@ class LevelPerksBloc extends Bloc<LevelPerksEvent, LevelPerksState> {
         LevelPerksError();
       }
     }
+
+    if (event is DeleteLevelPerk) {
+      try {
+        final List<dynamic> data = await animuRepository.deleteLevelPerk(
+          level: event.level,
+        );
+
+        final List<LevelPerk> levelPerks = data[0];
+        final List<Role> roles = data[1];
+        yield LevelPerksLoaded(levelPerks: levelPerks, roles: roles);
+      } catch (e) {
+        LevelPerksError();
+      }
+    }
   }
 }
