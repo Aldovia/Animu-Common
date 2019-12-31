@@ -25,3 +25,17 @@ class CreateSelfRole extends SelfRolesListEvent {
   @override
   String toString() => 'CreateSelfRole {role: $role, emoji: $emoji}';
 }
+
+class DeleteSelfRole extends SelfRolesListEvent {
+  final String role;
+
+  DeleteSelfRole({
+    @required this.role,
+  });
+
+  @override
+  List<Object> get props => [role];
+
+  @override
+  String toString() => 'DeleteSelfRole {role: $role}';
+}

@@ -18,8 +18,8 @@ import 'package:meta/meta.dart';
 
 class AnimuApiClient {
   static const baseUrl =
-  //'http://140.82.39.61:8080'; // Public
-  'http://192.168.1.105:8080'; // Dev testing
+      //'http://140.82.39.61:8080'; // Public
+      'http://192.168.1.105:8080'; // Dev testing
 
   final http.Client httpClient;
   final String token;
@@ -288,7 +288,31 @@ class AnimuApiClient {
     final selfRolesJson = jsonDecode(responses[0].body);
     final rolesJson = jsonDecode(responses[1].body);
 
-    print(selfRolesJson.toString());
+    final List<SelfRole> selfRolesList = [];
+
+    for (int i = 0; i < selfRolesJson['selfRoles'].length; i++) {
+      selfRolesList.add(
+        SelfRole.fromJson(selfRolesJson['selfRoles'][i], rolesJson['roles']),
+      );
+    }
+
+    return selfRolesList;
+  }
+
+  /// Delete a self role
+  Future<List<SelfRole>> deleteSelfRole({@required role}) async {
+    final String selfRolesUrl = '$baseUrl/api/selfroles/$role?token=$token';
+    final String rolesUrl = '$baseUrl/api/roles?token=$token';
+
+    final List<http.Response> responses =
+        await Future.wait([http.delete(selfRolesUrl), http.get(rolesUrl)]);
+
+    if (responses[0].statusCode != 200 || responses[1].statusCode != 200) {
+      throw Exception('error deleting self role');
+    }
+
+    final selfRolesJson = jsonDecode(responses[0].body);
+    final rolesJson = jsonDecode(responses[1].body);
 
     final List<SelfRole> selfRolesList = [];
 

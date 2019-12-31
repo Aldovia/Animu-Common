@@ -48,5 +48,19 @@ class SelfRolesListBloc extends Bloc<SelfRolesListEvent, SelfRolesListState> {
         SelfRolesListError();
       }
     }
+
+    if (event is DeleteSelfRole) {
+      try {
+        final List<dynamic> data = await animuRepository.deleteSelfRole(
+          role: event.role,
+        );
+
+        final List<SelfRole> selfRoles = data[0];
+        final List<Role> roles = data[1];
+        yield SelfRolesListLoaded(selfRoles: selfRoles, roles: roles);
+      } catch (e) {
+        SelfRolesListError();
+      }
+    }
   }
 }

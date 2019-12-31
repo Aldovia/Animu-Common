@@ -198,6 +198,15 @@ class AnimuRepository {
     return data;
   }
 
+  /// Deletes a self role and returns all self roles
+  Future<List<dynamic>> deleteSelfRole({@required role}) async {
+    List<dynamic> data = await Future.wait([
+      animuApiClient.deleteSelfRole(role: role),
+      animuApiClient.fetchRoles(),
+    ]);
+    return data;
+  }
+
   /// Update settings for self roles
   Future<List<dynamic>> updateSelfRolesSettings(
       {@required String key, @required dynamic value}) async {
