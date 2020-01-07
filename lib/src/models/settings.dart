@@ -26,6 +26,11 @@ class Settings extends Equatable {
   final bool filterSexuallyExplicit;
   final bool filterFlirtation;
 
+  // Welcome Message
+  final TextChannel welcomeChannel;
+  final String welcomeMessage;
+  final String welcomeImageURL;
+
   // Log Channels
   final TextChannel logReports;
 
@@ -50,6 +55,9 @@ class Settings extends Equatable {
     this.filterIdentityAttack,
     this.filterSexuallyExplicit,
     this.filterFlirtation,
+    this.welcomeChannel,
+    this.welcomeMessage,
+    this.welcomeImageURL,
     this.logReports,
   });
 
@@ -75,6 +83,9 @@ class Settings extends Equatable {
         filterIdentityAttack,
         filterSexuallyExplicit,
         filterFlirtation,
+        welcomeChannel,
+        welcomeMessage,
+        welcomeImageURL,
         logReports,
       ];
 
@@ -85,6 +96,7 @@ class Settings extends Equatable {
     final List<Role> tempIgnoreRepRoles = [];
     TextChannel tempReportsChannel;
     TextChannel tempSelfRolesChannel;
+    TextChannel tempWelcomeChannel;
 
     for (int i = 0; i < channelsJson.length; i++) {
       if (json['ignoreExpChannels'].contains(channelsJson[i]['id']))
@@ -97,6 +109,9 @@ class Settings extends Equatable {
 
       if (json['selfRolesChannel'] == channelsJson[i]['id'])
         tempSelfRolesChannel = TextChannel.fromJson(channelsJson[i]);
+
+      if (json['welcomeChannel'] == channelsJson[i]['id'])
+        tempWelcomeChannel = TextChannel.fromJson(channelsJson[i]);
     }
 
     for (int i = 0; i < rolesJson.length; i++) {
@@ -134,6 +149,9 @@ class Settings extends Equatable {
       filterSexuallyExplicit:
           json['toxicityFilters']['sexuallyExplicit'] ?? false,
       filterFlirtation: json['toxicityFilters']['flirtation'] ?? false,
+      welcomeChannel: tempWelcomeChannel,
+      welcomeMessage: json['welcomeMessage'],
+      welcomeImageURL: json['welcomeImageURL'],
     );
   }
 }

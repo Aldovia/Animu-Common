@@ -5,15 +5,15 @@ import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
 class AuthRepository {
-  static const baseUrl =
-      'http://140.82.39.61:8080'; // Public
-      //'http://192.168.1.105:8080'; // Dev testing
+  final client = new http.Client();
+  static const baseUrl = //'http://140.82.39.61:8080'; // Public
+      'http://192.168.1.105:8080'; // Dev testing
 
   final storage = FlutterSecureStorage();
 
   Future<dynamic> authenticate({@required String token}) async {
     final http.Response resRaw =
-        await http.get('$baseUrl/api/auth?token=$token');
+        await client.get(Uri.parse('$baseUrl/api/auth?token=$token'));
 
     final Map res = jsonDecode(resRaw.body);
 

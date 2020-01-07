@@ -172,6 +172,23 @@ class AnimuRepository {
     return data;
   }
 
+  /// Returns data for Welcome Message page
+  Future<List<dynamic>> getWelcomeMessageSettings() async {
+    List<dynamic> data = await Future.wait(
+        [animuApiClient.fetchSettings(), animuApiClient.fetchChannels()]);
+    return data;
+  }
+
+  /// Update settings for Welcome Message
+  Future<List<dynamic>> updateWelcomeMessageSettings(
+      {@required String key, @required dynamic value}) async {
+    List<dynamic> data = await Future.wait([
+      animuApiClient.updateSettings(key: key, value: value),
+      animuApiClient.fetchChannels()
+    ]);
+    return data;
+  }
+
   /// Returns Self roles for authorized guild
   Future<List<dynamic>> getSelfRoles() async {
     List<dynamic> data = await Future.wait([
