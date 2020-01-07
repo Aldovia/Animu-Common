@@ -28,8 +28,6 @@ class AnimuApiClient {
 
   /// Returns Guild using token
   Future<Guild> fetchGuild() async {
-    print('Printing Token $token');
-
     final String guildUrl = '$baseUrl/api/guild?token=$token';
     final http.Response guildResponse = await http.get(guildUrl);
 
@@ -38,7 +36,7 @@ class AnimuApiClient {
     }
 
     final guildJson = jsonDecode(guildResponse.body);
-    return Guild.fromJson(guildJson);
+    return Guild.fromJson(guildJson, baseUrl, token);
   }
 
   /// Returns GrowthRate of a guild

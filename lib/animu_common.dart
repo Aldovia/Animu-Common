@@ -65,6 +65,7 @@ export 'src/models/settings.dart';
 export 'src/models/text_channel.dart';
 export 'src/models/time_series_members.dart';
 export 'src/models/self_role.dart';
+export 'src/models/member.dart';
 
 // Repos
 export 'src/repos/animu_api_client.dart';

@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:animu_common/src/models/member.dart';
 import 'package:equatable/equatable.dart';
+import 'package:http/http.dart' as http;
 
 class Guild extends Equatable {
   final String id;
@@ -33,12 +36,24 @@ class Guild extends Equatable {
         tier
       ];
 
-  static Guild fromJson(dynamic json) {
+  static Future<Guild> fromJson(
+      dynamic json, String baseUrl, String token) async {
     final guild = json['guild'];
+
+    final String memberUrl =
+        '$baseUrl/api/members/${guild['ownerID']}?token=$token';
+    final http.Response ownerResponse = await http.get(memberUrl);
+
+    if (ownerResponse.statusCode != 200) {
+      throw Exception('error getting growth rate');
+    }
+
+    final ownerJSON = jsonDecode(ownerResponse.body);
+
     return Guild(
       id: guild['id'],
       name: guild['name'],
-      owner: guild['ownerID'],
+      owner: Member.fromJson(ownerJSON),
       memberCount: guild['memberCount'],
       onlineMemberCount: guild['onlineMemberCount'],
       nitroBoostersCount: guild['nitroBoostersCount'],

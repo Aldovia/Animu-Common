@@ -37,7 +37,7 @@ class WelcomeMessageSettingsBloc
           yield WelcomeMessageSettingsUnavailable();
         else
           yield WelcomeMessageSettingsLoaded(
-              settings: settings, channels: channels);
+              settings: settings, channels: channels, guild: guild);
       } catch (e) {
         WelcomeMessageSettingsError();
       }
@@ -47,10 +47,12 @@ class WelcomeMessageSettingsBloc
       try {
         final List<dynamic> welcomeMessageSettings = await animuRepository
             .updateWelcomeMessageSettings(key: event.key, value: event.value);
+        final Guild guild = await animuRepository.getGuild();
+
         final Settings settings = welcomeMessageSettings[0];
         final List<TextChannel> channels = welcomeMessageSettings[1];
         yield WelcomeMessageSettingsLoaded(
-            settings: settings, channels: channels);
+            settings: settings, channels: channels, guild: guild);
       } catch (e) {
         WelcomeMessageSettingsError();
       }

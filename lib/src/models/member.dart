@@ -51,20 +51,22 @@ class Member extends Equatable {
       ];
 
   static Member fromJson(dynamic json) {
+    final member = json['member'];
+
     return Member(
-      id: json['id'],
-      username: json['username'],
-      displayName: json['displayName'],
-      description: json['description'],
-      favoriteAnime: json['favoriteAnime'],
-      profileColor: json['profileColor'],
-      profileWallpaperURL: json['profileWallpaperURL'],
-      marriedTo: json['marriedTo'],
-      badges: json['badges'],
-      activeBadge: json['activeBadges'],
-      level: json['level'],
-      exp: json['exp'],
-      reputation: json['reputation'],
+      id: member['id'],
+      username: member['username'],
+      displayName: member['displayName'],
+      description: member['description'],
+      favoriteAnime: member['favoriteAnime'],
+      profileColor: member['profileColor'],
+      profileWallpaperURL: member['profileWallpaperURL'],
+      marriedTo: member['marriedTo'],
+      badges: member['badges']["badges"].cast<String>(),
+      activeBadge: member["badges"]['activeBadge'],
+      level: member['level']['level'],
+      exp: member['level']['exp'],
+      reputation: member['reputation'],
     );
   }
 }
