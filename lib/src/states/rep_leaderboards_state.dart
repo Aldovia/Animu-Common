@@ -1,4 +1,5 @@
-import '../models/rep_leaderboards_user.dart';
+import 'package:animu_common/animu_common.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -14,13 +15,13 @@ class RepLeaderboardsEmpty extends RepLeaderboardsState {}
 class RepLeaderboardsLoading extends RepLeaderboardsState {}
 
 class RepLeaderboardsLoaded extends RepLeaderboardsState {
-  final List<RepLeaderboardsUser> repLeaderboardsUsers;
+  final List<Member> leaderboardMembers;
 
-  const RepLeaderboardsLoaded({@required this.repLeaderboardsUsers})
-      : assert(repLeaderboardsUsers != null);
+  const RepLeaderboardsLoaded({@required this.leaderboardMembers})
+      : assert(leaderboardMembers != null);
 
   @override
-  List<Object> get props => [repLeaderboardsUsers];
+  List<Object> get props => [leaderboardMembers];
 }
 
 class RepLeaderboardsError extends RepLeaderboardsState {}

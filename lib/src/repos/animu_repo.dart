@@ -5,7 +5,6 @@ import '../models/growth_rate.dart';
 import '../models/guild.dart';
 import '../models/joined_rate.dart';
 import '../models/log.dart';
-import '../models/rep_leaderboards_user.dart';
 import '../models/settings.dart';
 import '../models/time_series_members.dart';
 import 'package:meta/meta.dart';
@@ -76,7 +75,7 @@ class AnimuRepository {
   }
 
   /// Returns rep leaderboard of authorized guild
-  Future<List<RepLeaderboardsUser>> getRepLeaderboard() {
+  Future<List<Member>> getRepLeaderboard() {
     return animuApiClient.fetchRepLeaderboardsUsers();
   }
 

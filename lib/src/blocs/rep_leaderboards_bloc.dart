@@ -1,7 +1,8 @@
+import 'package:animu_common/animu_common.dart';
+
 import '../events/rep_leaderboards_event.dart';
 import '../repos/animu_repo.dart';
 import '../states/rep_leaderboards_state.dart';
-import '../models/rep_leaderboards_user.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -23,9 +24,9 @@ class RepLeaderboardsBloc
       yield RepLeaderboardsLoading();
 
       try {
-        final List<RepLeaderboardsUser> leaderboardsUser =
+        final List<Member> leaderboardMembers =
             await animuRepository.getRepLeaderboard();
-        yield RepLeaderboardsLoaded(repLeaderboardsUsers: leaderboardsUser);
+        yield RepLeaderboardsLoaded(leaderboardMembers: leaderboardMembers);
       } catch (e) {
         RepLeaderboardsError();
       }

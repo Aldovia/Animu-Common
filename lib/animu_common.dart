@@ -61,7 +61,6 @@ export 'src/models/guild.dart';
 export 'src/models/joined_rate.dart';
 export 'src/models/level_perk.dart';
 export 'src/models/log.dart';
-export 'src/models/rep_leaderboards_user.dart';
 export 'src/models/role.dart';
 export 'src/models/settings.dart';
 export 'src/models/text_channel.dart';

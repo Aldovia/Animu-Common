@@ -9,7 +9,6 @@ import '../models/guild.dart';
 import '../models/joined_rate.dart';
 import '../models/level_perk.dart';
 import '../models/log.dart';
-import '../models/rep_leaderboards_user.dart';
 import '../models/role.dart';
 import '../models/settings.dart';
 import '../models/text_channel.dart';
@@ -123,25 +122,22 @@ class AnimuApiClient {
   }
 
   /// Returns rep leaderboard of a guild
-  Future<List<RepLeaderboardsUser>> fetchRepLeaderboardsUsers() async {
+  Future<List<Member>> fetchRepLeaderboardsUsers() async {
     final String leaderboardsUrl = '$baseUrl/api/leaderboards/rep?token=$token';
     final http.Response leaderboardsResponse = await http.get(leaderboardsUrl);
 
     if (leaderboardsResponse.statusCode != 200) {
-      throw Exception('error getting level leaderboards');
+      throw Exception('error getting rep leaderboards');
     }
 
     final leaderboardsJson = jsonDecode(leaderboardsResponse.body);
 
-    final List<RepLeaderboardsUser> leaderboardsList = [];
+    List<String> memberIDs = leaderboardsJson['members'].cast<String>();
 
-    for (int i = 0; i < leaderboardsJson['members'].length; i++) {
-      leaderboardsList.add(
-        RepLeaderboardsUser.fromJson(leaderboardsJson['members'][i]),
-      );
-    }
+    List<Member> members =
+        await Future.wait(memberIDs.map((id) => fetchMember(id)));
 
-    return leaderboardsList;
+    return members;
   }
 
   /// Fetch Settings of a guild
