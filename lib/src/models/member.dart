@@ -67,7 +67,10 @@ class Member extends Equatable {
       profileColor: member['profileColor'],
       profileWallpaperURL: member['profileWallpaperURL'],
       marriedTo: member['marriedTo'],
-      badges: member['badges']["badges"].cast<String>(),
+      badges:
+          member['badges']['badges'] != [] && member['badges']['badges'] != ''
+              ? member['badges']["badges"].cast<String>()
+              : [''],
       activeBadge: member["badges"]['activeBadge'],
       level: member['level']['level'],
       exp: member['level']['exp'],
