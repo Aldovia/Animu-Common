@@ -1,4 +1,5 @@
-import '../models/level_leaderboards_user.dart';
+import 'package:animu_common/animu_common.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -14,13 +15,13 @@ class LevelLeaderboardsEmpty extends LevelLeaderboardsState {}
 class LevelLeaderboardsLoading extends LevelLeaderboardsState {}
 
 class LevelLeaderboardsLoaded extends LevelLeaderboardsState {
-  final List<LevelLeaderboardsUser> levelLeaderboardsUsers;
+  final List<Member> leaderboardMembers;
 
-  const LevelLeaderboardsLoaded({@required this.levelLeaderboardsUsers})
-      : assert(levelLeaderboardsUsers != null);
+  const LevelLeaderboardsLoaded({@required this.leaderboardMembers})
+      : assert(leaderboardMembers != null);
 
   @override
-  List<Object> get props => [levelLeaderboardsUsers];
+  List<Object> get props => [leaderboardMembers];
 }
 
 class LevelLeaderboardsError extends LevelLeaderboardsState {}

@@ -1,7 +1,8 @@
+import 'package:animu_common/animu_common.dart';
+
 import '../events/level_leaderboards_event.dart';
 import '../repos/animu_repo.dart';
 import '../states/level_leaderboards_state.dart';
-import '../models/level_leaderboards_user.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -23,9 +24,9 @@ class LevelLeaderboardsBloc
       yield LevelLeaderboardsLoading();
 
       try {
-        final List<LevelLeaderboardsUser> leaderboardsUser =
+        final List<Member> leaderboardMembers =
             await animuRepository.getLevelsLeaderboard();
-        yield LevelLeaderboardsLoaded(levelLeaderboardsUsers: leaderboardsUser);
+        yield LevelLeaderboardsLoaded(leaderboardMembers: leaderboardMembers);
       } catch (e) {
         LevelLeaderboardsError();
       }

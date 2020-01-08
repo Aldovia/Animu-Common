@@ -4,7 +4,6 @@ import '../repos/animu_api_client.dart';
 import '../models/growth_rate.dart';
 import '../models/guild.dart';
 import '../models/joined_rate.dart';
-import '../models/level_leaderboards_user.dart';
 import '../models/log.dart';
 import '../models/rep_leaderboards_user.dart';
 import '../models/settings.dart';
@@ -72,7 +71,7 @@ class AnimuRepository {
   }
 
   /// Returns level leaderboard of authorized guild
-  Future<List<LevelLeaderboardsUser>> getLevelsLeaderboard() {
+  Future<List<Member>> getLevelsLeaderboard() {
     return animuApiClient.fetchLevelLeaderboardsUsers();
   }
 

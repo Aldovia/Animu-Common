@@ -59,7 +59,6 @@ export 'src/states/member_state.dart';
 export 'src/models/growth_rate.dart';
 export 'src/models/guild.dart';
 export 'src/models/joined_rate.dart';
-export 'src/models/level_leaderboards_user.dart';
 export 'src/models/level_perk.dart';
 export 'src/models/log.dart';
 export 'src/models/rep_leaderboards_user.dart';
