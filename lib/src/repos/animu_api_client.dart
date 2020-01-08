@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:animu_common/animu_common.dart';
 import 'package:animu_common/src/models/self_role.dart';
 
 import '../models/growth_rate.dart';
@@ -37,6 +38,19 @@ class AnimuApiClient {
 
     final guildJson = jsonDecode(guildResponse.body);
     return Guild.fromJson(guildJson, baseUrl, token);
+  }
+
+  /// Returns member using memberID
+  Future<Member> fetchMember(String memberID) async {
+    final String memberUrl = '$baseUrl/api/members/$memberID?token=$token';
+    final http.Response memberResponse = await http.get(memberUrl);
+
+    if (memberResponse.statusCode != 200) {
+      throw Exception('error getting member');
+    }
+
+    final memberJson = jsonDecode(memberResponse.body);
+    return Member.fromJson(memberJson);
   }
 
   /// Returns GrowthRate of a guild

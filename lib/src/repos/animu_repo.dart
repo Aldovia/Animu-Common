@@ -1,3 +1,5 @@
+import 'package:animu_common/animu_common.dart';
+
 import '../repos/animu_api_client.dart';
 import '../models/growth_rate.dart';
 import '../models/guild.dart';
@@ -18,6 +20,11 @@ class AnimuRepository {
   /// Returns Guild
   Future<Guild> getGuild() async {
     return await animuApiClient.fetchGuild();
+  }
+
+  /// Returns Member
+  Future<Member> getMember(String memberID) async {
+    return await animuApiClient.fetchMember(memberID);
   }
 
   /// Returns Charts for home page
