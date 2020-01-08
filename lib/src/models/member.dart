@@ -5,6 +5,7 @@ class Member extends Equatable {
   final String username;
   final String tag;
   final String displayName;
+  final String avatarURL;
   final String description;
   final String favoriteAnime;
   final String profileColor;
@@ -21,6 +22,7 @@ class Member extends Equatable {
       this.username,
       this.tag,
       this.displayName,
+      this.avatarURL,
       this.description,
       this.favoriteAnime,
       this.profileColor,
@@ -38,6 +40,7 @@ class Member extends Equatable {
         username,
         tag,
         displayName,
+        avatarURL,
         description,
         favoriteAnime,
         profileColor,
@@ -56,7 +59,9 @@ class Member extends Equatable {
     return Member(
       id: member['id'],
       username: member['username'],
+      tag: member['tag'],
       displayName: member['displayName'],
+      avatarURL: member['avatarURL'],
       description: member['description'],
       favoriteAnime: member['favoriteAnime'],
       profileColor: member['profileColor'],
