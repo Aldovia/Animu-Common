@@ -25,6 +25,11 @@ class AnimuRepository {
     return await animuApiClient.fetchMember(memberID);
   }
 
+  /// Give Badge
+  Future<Member> giveBadge(String memberID, String badgeName) async {
+    return await animuApiClient.giveBadge(memberID, badgeName);
+  }
+
   /// Returns Charts for home page
   Future<List<List<TimeSeriesMembers>>> getCharts(
       {int growthCycle = 7, int joinedCycle = 7}) async {

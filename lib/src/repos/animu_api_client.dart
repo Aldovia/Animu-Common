@@ -51,6 +51,28 @@ class AnimuApiClient {
     return Member.fromJson(memberJson);
   }
 
+  /// Give badge to a member
+  Future<Member> giveBadge(String memberID, String badgeName) async {
+    final String badgeUrl =
+        '$baseUrl/api/members/$memberID/badges?token=$token';
+    final String memberUrl = '$baseUrl/api/members/$memberID?token=$token';
+
+    final Map<String, dynamic> data = {'badgeName': badgeName};
+
+    final body = jsonEncode(data);
+
+    await http.post(badgeUrl,
+        headers: {"Content-Type": "application/json"}, body: body);
+    final http.Response memberResponse = await http.get(memberUrl);
+
+    if (memberResponse.statusCode != 200) {
+      throw Exception('error getting member');
+    }
+
+    final memberJson = jsonDecode(memberResponse.body);
+    return Member.fromJson(memberJson);
+  }
+
   /// Returns GrowthRate of a guild
   Future<GrowthRate> fetchGrowthRate({int growthCycle = 7}) async {
     final String growthUrl =

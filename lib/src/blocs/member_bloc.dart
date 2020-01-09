@@ -27,5 +27,16 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
         yield MemberError();
       }
     }
+
+    if (event is GiveBadge) {
+      try {
+        final Member member =
+            await animuRepository.giveBadge(event.memberID, event.badgeName);
+
+        yield MemberLoaded(member: member);
+      } catch (e) {
+        yield MemberError();
+      }
+    }
   }
 }

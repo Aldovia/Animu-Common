@@ -15,3 +15,16 @@ class FetchMember extends MemberEvent {
   @override
   String toString() => 'FetchMember {memberID: $memberID}';
 }
+
+class GiveBadge extends MemberEvent {
+  final String memberID;
+  final String badgeName;
+
+  GiveBadge({this.memberID, this.badgeName});
+
+  @override
+  List<Object> get props => [memberID, badgeName];
+
+  @override
+  String toString() => 'GiveBadge {memberID: $memberID, badgeName: $badgeName}';
+}
