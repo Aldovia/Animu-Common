@@ -28,3 +28,29 @@ class GiveBadge extends MemberEvent {
   @override
   String toString() => 'GiveBadge {memberID: $memberID, badgeName: $badgeName}';
 }
+
+class KickMember extends MemberEvent {
+  final String memberID;
+  final String reason;
+
+  KickMember({this.memberID, this.reason});
+
+  @override
+  List<Object> get props => [memberID, reason];
+
+  @override
+  String toString() => 'KickMember {memberID: $memberID, reason: $reason}';
+}
+
+class BanMember extends MemberEvent {
+  final String memberID;
+  final String reason;
+
+  BanMember({this.memberID, this.reason});
+
+  @override
+  List<Object> get props => [memberID, reason];
+
+  @override
+  String toString() => 'BanMember {memberID: $memberID, reason: $reason}';
+}

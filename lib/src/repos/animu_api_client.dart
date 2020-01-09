@@ -51,6 +51,48 @@ class AnimuApiClient {
     return Member.fromJson(memberJson);
   }
 
+  /// Kick a member
+  Future<Member> kickMember(String memberID, String reason) async {
+    final String kickUrl = '$baseUrl/api/members/$memberID/kick?token=$token';
+    final String memberUrl = '$baseUrl/api/members/$memberID?token=$token';
+
+    final Map<String, dynamic> data = {'reason': reason};
+
+    final body = jsonEncode(data);
+
+    await http.post(kickUrl,
+        headers: {"Content-Type": "application/json"}, body: body);
+    final http.Response memberResponse = await http.get(memberUrl);
+
+    if (memberResponse.statusCode != 200) {
+      throw Exception('error getting member');
+    }
+
+    final memberJson = jsonDecode(memberResponse.body);
+    return Member.fromJson(memberJson);
+  }
+
+  /// Ban a member
+  Future<Member> banMember(String memberID, String reason) async {
+    final String kickUrl = '$baseUrl/api/members/$memberID/kick?token=$token';
+    final String memberUrl = '$baseUrl/api/members/$memberID?token=$token';
+
+    final Map<String, dynamic> data = {'reason': reason};
+
+    final body = jsonEncode(data);
+
+    await http.post(kickUrl,
+        headers: {"Content-Type": "application/json"}, body: body);
+    final http.Response memberResponse = await http.get(memberUrl);
+
+    if (memberResponse.statusCode != 200) {
+      throw Exception('error getting member');
+    }
+
+    final memberJson = jsonDecode(memberResponse.body);
+    return Member.fromJson(memberJson);
+  }
+
   /// Give badge to a member
   Future<Member> giveBadge(String memberID, String badgeName) async {
     final String badgeUrl =

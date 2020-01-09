@@ -38,5 +38,27 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
         yield MemberError();
       }
     }
+
+    if (event is KickMember) {
+      try {
+        final Member member =
+            await animuRepository.kickMember(event.memberID, event.reason);
+
+        yield MemberLoaded(member: member);
+      } catch (e) {
+        yield MemberError();
+      }
+    }
+
+    if (event is BanMember) {
+      try {
+        final Member member =
+            await animuRepository.banMember(event.memberID, event.reason);
+
+        yield MemberLoaded(member: member);
+      } catch (e) {
+        yield MemberError();
+      }
+    }
   }
 }

@@ -25,6 +25,16 @@ class AnimuRepository {
     return await animuApiClient.fetchMember(memberID);
   }
 
+  /// Kick Member
+  Future<Member> kickMember(String memberID, String reason) async {
+    return await animuApiClient.kickMember(memberID, reason);
+  }
+
+  /// Ban Member
+  Future<Member> banMember(String memberID, String reason) async {
+    return await animuApiClient.banMember(memberID, reason);
+  }
+
   /// Give Badge
   Future<Member> giveBadge(String memberID, String badgeName) async {
     return await animuApiClient.giveBadge(memberID, badgeName);
