@@ -16,8 +16,8 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 class AnimuApiClient {
-  static const baseUrl = //'http://140.82.39.61:8080'; // Public
-      'http://192.168.1.105:8080'; // Dev testing
+  static const baseUrl = 'http://140.82.39.61:8080'; // Public
+      //'http://192.168.1.105:8080'; // Dev testing
 
   final http.Client httpClient;
   final String token;

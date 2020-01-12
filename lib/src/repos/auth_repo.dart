@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 
 class AuthRepository {
   final client = new http.Client();
-  static const baseUrl = //'http://140.82.39.61:8080'; // Public
-      'http://192.168.1.105:8080'; // Dev testing
+  static const baseUrl = 'http://140.82.39.61:8080'; // Public
+      //'http://192.168.1.105:8080'; // Dev testing
 
   final storage = FlutterSecureStorage();
 
